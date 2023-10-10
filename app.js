@@ -1,10 +1,16 @@
 const btnUsers = document.getElementById('cliUsers');
-
+const btnImages = document.getElementById('cliAlbums');
 
 async function readUsers() {
     const response = await fetch('https://jsonplaceholder.typicode.com/users');
     const data = await response.json();
     return data;
+}
+
+async function readAlbums() {
+    const results = await fetch('https://jsonplaceholder.typicode.com/albums/1/photos');
+    const info = await results.json();
+    return info;
 }
 
 /* const printUsers = async () => {
@@ -27,3 +33,14 @@ btnUsers.addEventListener('click', async (e) => {
     });
     content.innerHTML = plantilla;
 })
+
+btnImages.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const images = await readAlbums();
+    const get = document.getElementById('p');
+    let tables = '';
+    images.forEach((i) => {
+        tables += `<img src="${i.url}" alt="${i.title}">`;
+    });
+    get.innerHTML = tables;
+});
